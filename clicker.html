@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="clicker.css">
+<script type="text/javascript">
+var click=0;
+var coins=0;
+var collectionneur="";
+var sosobuy="";
+var setcoins=1;
+var setcoinsS=0;
+function clicker(){	
+	click++;
+	coins+=setcoins;
+	grade="";
+	if (click<100) {
+			grade="Débutant";
+		}	
+	if (click>=100) {
+			grade="Amateur";
+		}
+	if (click>=1100) {
+			grade="Pro";
+		}
+	if (click>=11200) {
+			grade="Maître";
+		}
+	if (click>=112400) {
+			grade="Légende";
+		}
+	if (click>=1124800) {
+			grade="Clicker";
+		}
+	//partie succes
+	if (coins>=100) {
+		collectionneur="Petit coffre(100coins collectionner)";
+	}
+	if (coins>=1000) {
+		collectionneur="Coffre de debutant(1000coins collectionner)";
+	}
+	if (coins>=10000) {
+		collectionneur="Grand coffre(10000coins collectionner)";
+	}
+	if (soso>=10) {
+		sosobuy="Table des sorciers(10 sorciers acheter)";
+	}
+	if (soso>=100) {
+		sosobuy="Tour des sorciers(100 sorciers acheter)";
+	}
+	if (soso>=1000) {
+		sosobuy="Academie des sorciers(1000 sorciers acheter)";
+	}
+
+	document.getElementById('click').innerHTML=Math.round(coins*100)/100+" coins ";
+	document.getElementById('Rank').innerHTML=grade;
+}
+var soso=0;
+var prixSoso=50;
+var orc=0;
+var prixOrc=120;
+var pekka=0;
+var prixPekka=350;
+var gobelin=0;
+var prixGobelin=10;
+function achat(achat){
+	var achat;
+		switch(achat){
+		case"gobelin":
+		if (coins>=prixGobelin) {
+			coins=coins-prixGobelin;
+			gobelin++;
+			prixGobelin=prixGobelin*1.02;
+		}
+		break;
+		case"soso":
+		if (coins>=prixSoso) {
+			coins=coins-prixSoso;
+			soso++;
+			prixSoso=prixSoso*1.02;	
+		}
+		break;
+		case"Orc":
+		if (coins>=prixOrc) {
+			coins=coins-prixOrc;
+			orc++;
+			prixOrc=prixOrc*1.02;
+		}
+		break;
+		case"Pekka":
+		if (coins>=prixPekka) {
+			coins=coins-prixPekka;
+			pekka++;
+			prixPekka=prixPekka*1.02;
+		}
+		break;
+		case"gob":
+		if (coins>=prixGob) {
+			coins=coins-prixGob;
+			gobelin+=5;
+			prixGobelin=prixGobelin*Math.pow(1.02,5);
+		}
+
+	}
+	setcoins=1+orc*0.3+soso*0.1+pekka*1+gobelin*0.05;
+	document.getElementById('click').innerHTML=Math.round(coins*100)/100+" coins ";
+	document.getElementById('acheter').innerHTML=gobelin+"Gobelin<br>"+soso+" Electrosorcier <br>"+orc+" Orc<br>"+pekka+" P.e.k.k.a";	
+	document.getElementById('setcoins').innerHTML=Math.round(setcoins*100)/100+" coins par click";
+	document.getElementById('prixSoso').innerHTML=Math.round(prixSoso*100)/100+" coins";
+	document.getElementById('prixOrc').innerHTML=Math.round(prixOrc*100)/100+" coins";
+	document.getElementById('prixPekka').innerHTML=Math.round(prixPekka*100)/100+" coins";
+	document.getElementById('prixGobelin').innerHTML=Math.round(prixGobelin*100)/100+" coins";
+
+}
+var zap=0;
+var prixZap=500;
+var fleche=0;
+var prixFleche=1200;
+var rocket=0;
+var prixRocket=3000;
+var foudre=0;
+var prixFoudre=4000;
+function achatTemps(achatTemps){
+	var achatTemps;
+	switch(achatTemps){
+		case"zap":
+		if (coins>=prixZap) {
+			coins=coins-prixZap;
+			zap++;
+			prixZap=prixZap*1.08;
+		}
+		break;
+		case"fleche":
+		if (coins>=prixFleche) {
+			coins=coins-prixFleche;
+			fleche++;
+			prixFleche=prixFleche*1.08;
+		}
+		break;
+		case"rocket":
+		if (coins>=prixRocket) {
+			coins=coins-prixRocket;
+			rocket++;
+			prixRocket=prixRocket*1.08;
+		}
+		break;
+		case"foudre":
+		if (coins>=prixFoudre) {
+			coins=coins-prixFoudre;
+			foudre++;
+			prixFoudre=prixFoudre*1.08;
+		}
+		break;
+	}
+	setcoinsS=0+zap*1+fleche*3+rocket*5+foudre*8;
+	document.getElementById('click').innerHTML=Math.round(coins*100)/100+" coins ";
+	document.getElementById('timer').innerHTML=Math.round(setcoinsS*100)/100+" coins/sec";
+	document.getElementById('prixZap').innerHTML=Math.round(prixZap*100)/100+" coins";
+	document.getElementById('prixFleche').innerHTML=Math.round(prixFleche*100)/100+" coins";
+	document.getElementById('prixRocket').innerHTML=Math.round(prixRocket*100)/100+" coins";
+	document.getElementById('prixFoudre').innerHTML=Math.round(prixFoudre*100)/100+" coins";
+}
+
+function succes(){
+	if (collectionneur=="" ) {
+		document.getElementById('succes').innerHTML="Aucun succes debloquer";
+	}
+	else document.getElementById('succes').innerHTML="Succes debloquer :<br>"+collectionneur+"<br>"+sosobuy;
+}
+function resetSucces(){
+	document.getElementById('succes').innerHTML="";
+}
+function timer(){
+	setInterval(function(){coins+=setcoinsS/100;
+		if (setcoins>=3) {document.getElementById('click').innerHTML=Math.round(coins*1)/1+" coins ";}
+		else
+		document.getElementById('click').innerHTML=Math.round(coins*100)/100+" coins ";},10);
+
+}	
+var width = 1;
+function move() {
+    var elem = document.getElementById("myBar");
+        if (grade=="Débutant") {
+        	width++;
+            elem.style.width = width + '%';
+            elem.innerHTML = width * 1  + '%';
+        	 
+        } 
+        if ((width==100) && (grade=="Débutant")){
+        	elem.style.width= "0%"; 
+        	width=0;
+        }
+        if (grade=="Amateur") {
+        	width++;
+            elem.style.width = width/10 + '%';
+            elem.innerHTML = width*0.1 + '%';
+        	  
+        } 
+        if ((grade=="Amateur") && (width==1000)) {
+         	elem.style.width= "0%"; 
+        	width=0;
+        }
+          if (grade=="Pro") {
+        	width++;
+            elem.style.width = width/100 + '%';
+            elem.innerHTML = width * 0.01  + '%';
+        	  
+        } 
+        if ((grade=="Pro") && (width==10000)) {
+         	elem.style.width= "0%"; 
+        	width=0;
+        }
+          if (grade=="Maître") {
+        	width++;
+            elem.style.width = width/1000 + '%';
+            elem.innerHTML = width * 0.001  + '%';
+        	  
+        } 
+        if ((grade=="Maître") && (width==100000)) {
+         	elem.style.width= "0%"; 
+        	width=0;
+        }
+          if (grade=="Légende") {
+        	width++;
+            elem.style.width = width/10000 + '%';
+            elem.innerHTML = width * 0.0001  + '%';  
+        } 
+}
+function multiplicateur(multi){
+	var multi;
+	switch(multi){
+		case"1":
+		var prixSo=50;
+		var prixOr=120;
+		var prixGob=10;
+		var prixPek=350;
+			document.getElementById('prixSoso').innerHTML=Math.round(prixSo*100)/100+" coins";
+			document.getElementById('prixOrc').innerHTML=Math.round(prixOr*100)/100+" coins";
+			document.getElementById('prixPekka').innerHTML=Math.round(prixPek*100)/100+" coins";
+			document.getElementById('prixGobelin').innerHTML=Math.round(prixGob*100)/100+" coins";
+		break;
+		case"5":
+			var prixSo=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixSo+=(prixSoso)*(Math.pow(1.02,i));
+
+			}
+			var prixGob=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixGob+=(prixGobelin)*(Math.pow(1.02,i));
+
+			}
+			var prixOr=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixOr+=(prixOrc)*(Math.pow(1.02,i));
+
+			}
+			var prixPek=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixPek+=(prixPekka)*(Math.pow(1.02,i));
+
+			}
+			document.getElementById('prixSoso').innerHTML=Math.round(prixSo*100)/100+" coins";
+			document.getElementById('prixOrc').innerHTML=Math.round(prixOr*100)/100+" coins";
+			document.getElementById('prixPekka').innerHTML=Math.round(prixPek*100)/100+" coins";
+			document.getElementById('prixGobelin').innerHTML=Math.round(prixGob*100)/100+" coins";
+		break;
+		case"10":
+			var prixSo=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixSo+=(prixSoso)*(Math.pow(1.02,i));
+
+			}
+			var prixGob=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixGob+=(prixGobelin)*(Math.pow(1.02,i));
+
+			}
+			var prixOr=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixOr+=(prixOrc)*(Math.pow(1.02,i));
+
+			}
+			var prixPek=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixPek+=(prixPekka)*(Math.pow(1.02,i));
+
+			}
+			document.getElementById('prixSoso').innerHTML=Math.round(prixSo*100)/100+" coins";
+			document.getElementById('prixOrc').innerHTML=Math.round(prixOr*100)/100+" coins";
+			document.getElementById('prixPekka').innerHTML=Math.round(prixPek*100)/100+" coins";
+			document.getElementById('prixGobelin').innerHTML=Math.round(prixGob*100)/100+" coins";
+		break;
+		case"1s":
+			document.getElementById('prixZap').innerHTML=Math.round(prixZap*100)/100+" coins";
+			document.getElementById('prixFleche').innerHTML=Math.round(prixFleche*100)/100+" coins";
+			document.getElementById('prixRocket').innerHTML=Math.round(prixRocket*100)/100+" coins";
+			document.getElementById('prixFoudre').innerHTML=Math.round(prixFoudre*100)/100+" coins";
+		break;
+		case"5s":
+			var prixZa=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixZa+=(prixZap)*(Math.pow(1.08,i));
+
+			}
+			var prixFle=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixFle+=(prixFleche)*(Math.pow(1.08,i));
+
+			}
+			var prixRoc=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixRoc+=(prixRocket)*(Math.pow(1.08,i));
+
+			}
+			var prixFou=0;
+			for (var i = 1 ; i <= 5; i++) {
+				prixFou+=(prixFoudre)*(Math.pow(1.08,i));
+
+			}
+			document.getElementById('prixZap').innerHTML=Math.round(prixZa*100)/100+" coins";
+			document.getElementById('prixFleche').innerHTML=Math.round(prixFle*100)/100+" coins";
+			document.getElementById('prixRocket').innerHTML=Math.round(prixRoc*100)/100+" coins";
+			document.getElementById('prixFoudre').innerHTML=Math.round(prixFou*100)/100+" coins";
+		break;
+		case"10s":
+			var prixZa=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixZa+=(prixZap)*(Math.pow(1.08,i));
+
+			}
+			var prixFle=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixFle+=(prixFleche)*(Math.pow(1.08,i));
+
+			}
+			var prixRoc=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixRoc+=(prixRocket)*(Math.pow(1.08,i));
+
+			}
+			var prixFou=0;
+			for (var i = 1 ; i <= 10; i++) {
+				prixFou+=(prixFoudre)*(Math.pow(1.08,i));
+
+			}
+			document.getElementById('prixZap').innerHTML=Math.round(prixZa*100)/100+" coins";
+			document.getElementById('prixFleche').innerHTML=Math.round(prixFle*100)/100+" coins";
+			document.getElementById('prixRocket').innerHTML=Math.round(prixRoc*100)/100+" coins";
+			document.getElementById('prixFoudre').innerHTML=Math.round(prixFou*100)/100+" coins";
+		break;
+
+
+	}
+}
+</script>
+</head>
+<body onLoad="timer()" >
+	<div>
+		<button id="boutton" onclick="clicker()" onmousedown="move()"">Ouvrir</button>
+		<div id="shop">
+		<button onclick="multiplicateur('1')" >x1</button>
+		<button onclick="multiplicateur('5')" >x5</button>
+		<button onclick="multiplicateur('10')" >x10</button>
+		<button class="class" onclick="achat('gob')" onmousedown="achat('gobelin')"><h2>Gobelin</h2> <p id="prixGobelin"><script>document.write(prixGobelin+"coins")</script></p>+0.05</button>
+		<button class="class" onclick="achat('soso')"><h2>Electrosorcier</h2><p id="prixSoso"><script>document.write(prixSoso+"coins")</script></p>+0,1</button><br>
+		<button class="class" onclick="achat('Orc')"><h2>Orc</h2><p id="prixOrc"><script>document.write(prixOrc+"coins")</script></p>+0,3</button><br>
+		<button class="class" onclick="achat('Pekka')"><h2>P.e.k.k.a</h2> <p id="prixPekka"><script>document.write(prixPekka+"coins")</script></p>+1</button>
+		</div>
+		<div id="shopSec">
+		<button onclick="multiplicateur('1s')" >x1</button>
+		<button onclick="multiplicateur('5s')" >x5</button>
+		<button onclick="multiplicateur('10s')" >x10</button>
+
+		<button class="class" onclick="achatTemps('zap')"><h2>ZAP</h2><p id="prixZap"><script>document.write(prixZap+"coins")</script></p>+1/sec</button><br>
+		<button class="class" onclick="achatTemps('fleche')" ><h2>FLECHE</h2><p id="prixFleche"><script>document.write(prixFleche+"coins")</script></p>+3/sec</button><br>	
+		<button class="class" onclick="achatTemps('rocket')" ><h2>ROCKET</h2><p id="prixRocket"><script>document.write(prixRocket+"coins")</script></p>+5/sec</button><br>
+		<button class="class" onclick="achatTemps('foudre')" ><h2>FOUDRE</h2><p id="prixFoudre"><script>document.write(prixFoudre+"coins")</script></p>+8/sec</button>				
+		</div>
+		<button class="class" onmouseover="succes()" onmouseleave="resetSucces()">Succes</button>
+	</div>
+	<div id="click">0 coin</div>
+	<div id="succes"></div>
+	<div id="acheter"></div>
+	<div id="stat">
+		<div id="setcoins">1 coin par click</div>
+		<div id="timer">0 coin/sec</div>
+	</div>
+
+	<div id="myProgress">
+	  <div id="myBar"></div>
+	</div>
+	<div id="Rank"></div>
+</body>
+</html>
